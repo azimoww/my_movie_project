@@ -51,3 +51,21 @@ public class  MovieDetails {
     @JoinColumn(name = "details_id")
     private Movie movie;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
