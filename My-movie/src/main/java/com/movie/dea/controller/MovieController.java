@@ -14,7 +14,7 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-    // Список фильмов
+    // Список всех фильмов
     @GetMapping
     public String getAllMovies(Model model) {
         model.addAttribute("movies", movieService.getAllMovies());
@@ -31,7 +31,7 @@ public class MovieController {
         return "movies/new";
     }
 
-    // Форма редактирования (теперь кнопка Edit заработает)
+    // Форма редактирования (для яркого дизайна Edit Movie)
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         model.addAttribute("movie", movieService.getMovieById(id));
@@ -40,17 +40,15 @@ public class MovieController {
         return "movies/new";
     }
 
-    // Удаление фильма (теперь кнопка Delete заработает)
-    @GetMapping("/delete/{id}")
-    public String deleteMovie(@PathVariable Long id) {
-        movieService.deleteMovie(id);
-        return "redirect:/movies";
-    }
-
-    // Сохранение
     @PostMapping("/save")
     public String saveMovie(@ModelAttribute("movie") Movie movie) {
         movieService.saveMovie(movie);
+        return "redirect:/movies";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteMovie(@PathVariable Long id) {
+        movieService.deleteMovie(id);
         return "redirect:/movies";
     }
 }

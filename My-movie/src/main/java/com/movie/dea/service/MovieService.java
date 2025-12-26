@@ -75,18 +75,5 @@ public class MovieService {
         return "Not found";
     }
 
-    public @Nullable Object getAllMovies() {
-        return null;
-    }
 
-    public @Nullable Object getMovieById(Long id) {
-        return null;
-    }
-
-    public void saveMovie(Movie movie) {
-    }
-
-    public void deleteMovie(Long id) {
-
-    }
 }
