@@ -2,18 +2,48 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add Movie</title>
+    <title>New Movie</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .form-card { background: #E6E6DA; padding: 40px; border-radius: 15px; width: 400px; text-align: center; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .btn-group { margin-top: 20px; display: flex; justify-content: center; gap: 10px; }
+        .btn { padding: 10px 25px; border-radius: 5px; text-decoration: none; color: white; border: none; cursor: pointer; }
+        .btn-save { background: #8cb85c; }
+        .btn-back { background: #a8a8a8; }
+    </style>
 </head>
 <body>
-<h2>New Movie</h2>
-<form th:action="@{/movies}" th:object="${movie}" method="post">
-    Title <input type="text" th:field="*{title}" /> <br>
-    Genre <input type="text" th:field="*{genre}" /> <br>
-    Rating <input type="number" step="0.1" th:field="*{rating}" /> <br>
-    Release Date <input type="date" th:field="*{releaseDate}" /> <br>
-
-    <button type="submit">Save</button>
-</form>
-
+<div class="form-card">
+    <h2>New Movie</h2>
+    <form th:action="@{/movies/save}" th:object="${movie}" method="post">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" th:field="*{title}" placeholder="Enter title" required/>
+        </div>
+        <div class="form-group">
+            <label>Genre</label>
+            <input type="text" th:field="*{genre}" placeholder="Enter genre"/>
+        </div>
+        <div class="form-group">
+            <label>Release Date</label>
+            <input type="date" th:field="*{releaseDate}"/>
+        </div>
+        <div class="form-group">
+            <label>Rating</label>
+            <input type="number" step="0.1" th:field="*{rating}" placeholder="Enter rating"/>
+        </div>
+        <div class="form-group">
+            <label>Duration</label>
+            <input type="text" th:field="*{duration}" placeholder="Enter duration"/>
+        </div>
+        <div class="btn-group">
+            <a th:href="@{/movies}" class="btn btn-back">Back</a>
+            <button type="submit" class="btn btn-save">Save</button>
+        </div>
+    </form>
+</div>
 </body>
 </html>

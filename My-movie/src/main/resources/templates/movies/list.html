@@ -2,34 +2,76 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Movies</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f2f5; padding: 40px; }
+    .main-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 12px; border: 1px solid #dee2e6; text-align: left; }
+    th { background: #f8f9fa; }
+    .btn { padding: 6px 12px; border-radius: 4px; text-decoration: none; color: white; font-size: 13px; border:none; cursor:pointer;}
+    .btn-add { background: #28a745; display: inline-block; margin-bottom: 10px; }
+    .btn-edit { background: #007bff; margin-right: 5px; }
+    .btn-delete { background: #dc3545; }
+  </style>
 </head>
 <body>
-<h2>Movies</h2>
-
-<a href="/movies/new">Add Movie</a>
-
-<table border="1">
-  <tr>
-    <th>ID</th>
-    <th>Title</th>
-    <th>Genre</th>
-    <th>Rating</th>
-    <th>Release Date</th>
-    <th>Duration</th>
-  </tr>
-
-  <tr th:each="movie : ${movies}">
-    <td th:text="${movie.id}"></td>
-    <td th:text="${movie.title}"></td>
-    <td th:text="${movie.genre}"></td>
-    <td th:text="${movie.rating}"></td>
-    <td th:text="${movie.releaseDate}"></td>
-    <td th:text="${movie.duration}"></td>
-    <td>
-      <a th:href="@{/movies/{id}/edit(id=${movie.id})}">Edit</a>
-    </td>
-  </tr>
-</table>
+<div class="main-card">
+  <h2>Movies</h2>
+  <a th:href="@{/movies/new}" class="btn btn-add">Add Movie</a>
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Genre</th>
+      <th>Rating</th>
+      <th>Release Date</th>
+      <th>Duration</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="movie : ${movies}">
+      <td th:text="${movie.title}"></td>
+      <td th:text="${movie.genre}"></td>
+      <td th:text="${movie.rating}"></td>
+      <td th:text="${movie.releaseDate}"></td>
+      <td th:text="${movie.duration}"></td>
+      <td>
+        <div style="display: flex;">
+          <a th:href="@{/movies/{id}/edit(id=${movie.id})}" class="btn btn-edit">Edit</a>
+          <form th:action="@{/movies/{id}/delete(id=${movie.id})}" method="post">
+            <button type="submit" class="btn btn-delete">Delete</button>
+          </form>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
