@@ -2,7 +2,6 @@ package com.movie.dea.service;
 
 import com.movie.dea.entity.Movie;
 import com.movie.dea.repository.MovieRepository;
-import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,20 +22,16 @@ public class MovieService {
     public List<Movie> getAllMovie() {
         return movieRepository.findAll();
     }
-
     public List<Movie> getAllMovieByTitle(@PathVariable String title) {
         return movieRepository.findByTitle(title);
     }
-
     public List<Movie> getAllMovieByGenre(@PathVariable String genre) {
         return movieRepository.findByGenre(genre);
     }
-
     public List<Movie> getAllMovieByMinRating(@PathVariable Double minRating) {
         return movieRepository.findByMinRating(minRating);
     }
-
-    public List<Movie> getAllMovieByReleaseDate(@PathVariable LocalDate releaseDate) {
+    public List<Movie> getAllMovieByReleaseDate(@PathVariable LocalDate releaseDate){
         return movieRepository.findByReleaseDate(releaseDate);
     }
 
@@ -46,10 +41,10 @@ public class MovieService {
 
     public Movie getMovie(@PathVariable Integer id) {
         return movieRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No such a movie in db: " + id));
+                .orElseThrow(()-> new RuntimeException("No such a movie in db: " + id));
     }
 
-    public Page<Movie> getMoviesByPage(@RequestParam int page, @RequestParam int size) {
+    public Page<Movie> getMoviesByPage(@RequestParam int page, @RequestParam int size){
         Pageable pageable = PageRequest.of(page, size);
         return movieRepository.findAll(pageable);
     }
@@ -68,11 +63,24 @@ public class MovieService {
     }
 
     public String deleteById(@PathVariable Integer id) {
-        if (movieRepository.existsById(id)) {
+        if(movieRepository.existsById(id)){
             movieRepository.deleteById(id);
             return "Movie deleted!";
         }
         return "Not found";
+    }
+
+
+    public List<Movie> search(@PathVariable String title, @PathVariable String genre) {
+        if (title != null && !title.isBlank()) {
+            return movieRepository.findByTitleContainingIgnoreCase(title);
+        }
+
+        if (genre != null && !genre.isBlank()) {
+            return movieRepository.findByGenre(genre);
+        }
+
+        return movieRepository.findAll();
     }
 
 

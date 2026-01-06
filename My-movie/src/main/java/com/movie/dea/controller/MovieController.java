@@ -2,53 +2,71 @@ package com.movie.dea.controller;
 
 import com.movie.dea.entity.Movie;
 import com.movie.dea.service.MovieService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/movies")
+import java.time.LocalDate;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/movies")
 public class MovieController {
+    private final MovieService movieService;
 
-    @Autowired
-    private MovieService movieService;
-
-    // Список всех фильмов
-    @GetMapping
-    public String getAllMovies(Model model) {
-        model.addAttribute("movies", movieService.getAllMovies());
-        model.addAttribute("mode", "list");
-        return "movies/new";
+    public MovieController(MovieService movieService) {
+        this.movieService = movieService;
     }
 
-    // Форма создания
-    @GetMapping("/new")
-    public String showCreateForm(Model model) {
-        model.addAttribute("movie", new Movie());
-        model.addAttribute("mode", "form");
-        model.addAttribute("formTitle", "New Movie");
-        return "movies/new";
+    @GetMapping("/pagination")
+    public Page<Movie> getPagination(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        return movieService.getMoviesByPage(page    , size);
     }
 
-    // Форма редактирования (для яркого дизайна Edit Movie)
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        model.addAttribute("movie", movieService.getMovieById(id));
-        model.addAttribute("mode", "form");
-        model.addAttribute("formTitle", "Edit Movie");
-        return "movies/new";
+    @GetMapping("/all")
+    public List<Movie> getMovies(){
+        return movieService.getAllMovie();
     }
 
-    @PostMapping("/save")
-    public String saveMovie(@ModelAttribute("movie") Movie movie) {
-        movieService.saveMovie(movie);
-        return "redirect:/movies";
+    @GetMapping("/title/{title}")
+    public List<Movie> getMoviesByTitle(@PathVariable String title) {
+        return movieService.getAllMovieByTitle(title);
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteMovie(@PathVariable Long id) {
-        movieService.deleteMovie(id);
-        return "redirect:/movies";
+    @GetMapping("/genre/{genre}")
+    public List<Movie> getMoviesByGenre(@PathVariable String genre) {
+        return movieService.getAllMovieByGenre(genre);
+    }
+
+    @GetMapping("/rating/{minRating}")
+    public List<Movie> getAllMoviesByMinRating(@PathVariable Double minRating) {
+        return movieService.getAllMovieByMinRating(minRating);
+    }
+
+    @GetMapping("/{id}")
+    public Movie getMovieById(@PathVariable Integer id){
+        return movieService.getMovie(id);
+    }
+
+    @GetMapping("/date/{releaseDate}")
+    public List<Movie> getMovieByDate(@PathVariable LocalDate releaseDate){
+        return movieService.getAllMovieByReleaseDate(releaseDate);
+    }
+
+    @PostMapping("/add")
+    public Movie creatMovie(@RequestBody Movie movie) {
+        return movieService.createMovie(movie);
+    }
+
+    @PutMapping("/update/{id}")
+    public Movie updateMovie(@PathVariable Integer id, @RequestBody Movie movie) {
+        return movieService.updateMovie(id, movie);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteMovie(@PathVariable Integer id) {
+        return movieService.deleteById(id);
     }
 }
