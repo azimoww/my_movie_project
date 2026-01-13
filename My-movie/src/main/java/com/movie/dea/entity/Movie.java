@@ -1,7 +1,9 @@
 package com.movie.dea.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+
 
 import java.time.LocalDate;
 
@@ -11,8 +13,12 @@ import java.time.LocalDate;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+
+
+ @NotBlank (message = "Title is required!")
     private String title;
+    @NotBlank (message = " Genre is required!")
+    private Integer id;
     private String genre;
     private LocalDate releaseDate;
     private Double rating;

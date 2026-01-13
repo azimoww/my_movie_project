@@ -3,13 +3,15 @@ package com.movie.dea.controller;
 import com.movie.dea.entity.Movie;
 import com.movie.dea.service.MovieService;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/movies")
-public class MoviePageController { // controller UI
+public class MoviePageController {
     private final MovieService movieService;
 
     public MoviePageController(MovieService movieService) {
@@ -28,7 +30,7 @@ public class MoviePageController { // controller UI
         return "movies/list";
     }
 
-    // формат добавлния
+
     @GetMapping("/new")
     public String form(Model model){
         model.addAttribute("movie", new Movie());
@@ -36,12 +38,17 @@ public class MoviePageController { // controller UI
     }
 
     @PostMapping
-    public String save(@ModelAttribute Movie movie) {
+    public String save(@Valid @ModelAttribute Movie movie, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "movies/new";
+        }
+
         movieService.createMovie(movie);
         return "redirect:/movies";
     }
 
-    // формат обновлении
+
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable Integer id,Model model){
         model.addAttribute("movie", movieService.getMovie(id));
@@ -73,48 +80,6 @@ public class MoviePageController { // controller UI
 
 
 
-
-
-
-
-
-
-
-
-
-//
-//package com.movie.dea.controller;
-//
-//import com.movie.dea.entity.MovieDetails;
-//import com.movie.dea.service.MovieDetailsService;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.List;
-//
-//@RestController
-//@RequestMapping ("/details")
-//public class MovieDetailsController {
-//    private final MovieDetailsService movieDetailsService;
-//
-//    public MovieDetailsController(MovieDetailsService movieDetailsService) {
-//        this.movieDetailsService = movieDetailsService;
-//    }
-//
-//    @GetMapping("/all")
-//    public List<MovieDetails> getAllDetails() {
-//        return movieDetailsService.getAllDetails();
-//    }
-//
-//    @GetMapping("/{id}")
-//    public MovieDetails getDetailsById(@PathVariable Integer id) {
-//        return movieDetailsService.getDetailsById(id);
-//    }
-//
-//    @PostMapping("/add")
-//    public MovieDetails createNewDetails(@RequestBody MovieDetails movieDetails) {
-//        return movieDetailsService.createDetails(movieDetails);
-//    }
-//}
 
 
 
