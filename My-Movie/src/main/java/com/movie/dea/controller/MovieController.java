@@ -9,45 +9,45 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/movies")
 public class MovieController {
-    private final com.movie.dea.servise.MovieService movieService;
-    public MovieController(com.movie.dea.servise.MovieService movieService) {
-        this.movieService = movieService;
+    private final com.movie.dea.service.MovieService movieService;
+    public MovieController(com.movie.dea.service.MovieService movieService) {
+        this.MovieService = movieService;
     }
     @GetMapping("/pagination")
     public Page<Movie> getPagination(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size
     ) {
-        return movieService.getMoviesByPage(page    , size);
+        return MovieService.getMoviesByPage(page    , size);
     }
     @Operation(summary = "Get All Movies")
     @GetMapping("/all")
     public List<Movie> getMovies(){
-        return movieService.getAllMovie();
+        return MovieService.getAllMovie();
     }
     @GetMapping("/rating/{minRating}")
     public List<Movie> getAllMoviesByMinRating(@PathVariable Double minRating) {
-        return movieService.getAllMovieByMinRating(minRating);
+        return MovieService.getAllMovieByMinRating(minRating);
     }
     @GetMapping("/{id}")
     public Movie getMovieById(@PathVariable Integer id){
-        return movieService.getMovie(id);
+        return MovieService.getMovie(id);
     }
     @GetMapping("/date/{releaseDate}")
     public List<Movie> getMovieByDate(@PathVariable LocalDate releaseDate){
-        return movieService.getAllMovieByReleaseDate(releaseDate);
+        return MovieService.getAllMovieByReleaseDate(releaseDate);
     }
     @PostMapping("/add")
     public Movie creatMovie(@RequestBody Movie movie) {
-        return movieService.createMovie(movie);
+        return MovieService.createMovie(movie);
     }
     @PutMapping("/update/{id}")
     public Movie updateMovie(@PathVariable Integer id, @RequestBody Movie movie) {
-        return movieService.updateMovie(id, movie);
+        return MovieService.updateMovie(id, movie);
     }
     @DeleteMapping("/delete/{id}")
     public void deleteMovie(@PathVariable Integer id) {
-        movieService.deleteById(id);
+        MovieService.deleteById(id);
     }
 }
 

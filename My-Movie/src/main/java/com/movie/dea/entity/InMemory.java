@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class InMemory {
     @Bean
-    public UserDetailsService users() {
+    public UserDetailsService users(){
         UserDetails admin = User.builder()
                 .username("admin")
                 .password("1234")

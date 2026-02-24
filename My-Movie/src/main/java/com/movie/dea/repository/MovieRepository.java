@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
+
     @Query(value = "SELECT * FROM movies WHERE rating >= :minRating", nativeQuery = true)
     List<Movie> findByMinRating(Double minRating);
     @Query(value = "SELECT * FROM movies WHERE release_date >= :releaseDate", nativeQuery = true)

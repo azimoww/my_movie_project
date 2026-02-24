@@ -12,7 +12,6 @@ public class MovieMapper {
         dto.setTitle(movie.getTitle());
         dto.setGenre(movie.getGenre());
         dto.setReleaseDate(movie.getReleaseDate());
-//        dto.setRating(movie.getRating());
         dto.setDuration(movie.getDuration());
         if (movie.getDirector() != null) {
             dto.setDirectorId(movie.getDirector().getId());

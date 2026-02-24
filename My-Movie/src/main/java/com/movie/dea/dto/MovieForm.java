@@ -29,7 +29,7 @@ public class MovieForm {
     public void setTitle(String title) {
         this.title = title;
     }
-    public String getDuration() {
+    public Integer getDuration() {
         return duration;
     }
     public void setDuration(String duration) {

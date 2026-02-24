@@ -1,10 +1,6 @@
 package com.movie.dea.entity;
 import jakarta.persistence.*;
-import java.time.LocalDate;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+
 import java.time.LocalDate;
 @Entity
 @Table(name = "movies")
@@ -16,43 +12,26 @@ public class Movie {
     private String genre;
     private LocalDate releaseDate;
     private Double rating;
-    private String duration;
-    @ManyToOne(fetch = FetchType.EAGER)
+    private Integer duration;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "director_id")
     private Director director;
     public Movie() {
     }
-    public Movie(Integer id, String title, String genre, String duration, Double rating, LocalDate releaseDate) {
+    public Movie(Integer id, String title, String genre, LocalDate releaseDate, Double rating, Integer duration) {
         this.id = id;
         this.title = title;
         this.genre = genre;
-        this.duration = duration;
-        this.rating = rating;
         this.releaseDate = releaseDate;
+        this.rating = rating;
+        this.duration = duration;
     }
     public Director getDirector() {
         return director;
     }
     public void setDirector(Director director) {
         this.director = director;
-    }
-    public LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-    public void setReleaseDate(LocalDate releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-    public String getDuration() {
-        return duration;
-    }
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-    public Double getRating() {
-        return rating;
-    }
-    public void setRating(Double rating) {
-        this.rating = rating;
     }
     public Integer getId() {
         return id;
@@ -71,5 +50,24 @@ public class Movie {
     }
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+    public Double getRating() {
+        return rating;
+    }
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 }
