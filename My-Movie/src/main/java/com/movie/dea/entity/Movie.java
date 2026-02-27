@@ -1,6 +1,5 @@
 package com.movie.dea.entity;
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 @Entity
 @Table(name = "movies")
@@ -64,7 +63,7 @@ public class Movie {
         this.rating = rating;
     }
 
-    public String getDuration() {
+    public Integer getDuration() {
         return duration;
     }
     public void setDuration(Integer duration) {
