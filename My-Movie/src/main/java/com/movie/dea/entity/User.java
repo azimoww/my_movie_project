@@ -1,5 +1,5 @@
 package com.movie.dea.entity;
-import jakarta.persistence.;
+import jakarta.persistence.*;
 @Entity
 @Table(name = "users")
 public class User {

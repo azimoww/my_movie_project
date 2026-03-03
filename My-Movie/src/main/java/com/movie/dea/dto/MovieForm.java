@@ -36,7 +36,7 @@ public class MovieForm {
         this.duration = duration;
     }
     public LocalDate getReleaseDate() {
-        return LocalDate.parse(releaseDate);///////////////////////////////////////
+        return LocalDate.parse(releaseDate);
     }
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = String.valueOf(releaseDate);

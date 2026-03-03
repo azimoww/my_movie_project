@@ -11,14 +11,14 @@ public class Movie {
     private String genre;
     private LocalDate releaseDate;
     private Double rating;
-    private Integer duration;
+    private String duration;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "director_id")
     private Director director;
     public Movie() {
     }
-    public Movie(Integer id, String title, String genre, LocalDate releaseDate, Double rating, Integer duration) {
+    public Movie(Integer id, String title, String genre, LocalDate releaseDate, Double rating, String duration) {
         this.id = id;
         this.title = title;
         this.genre = genre;
@@ -62,11 +62,10 @@ public class Movie {
     public void setRating(Double rating) {
         this.rating = rating;
     }
+    public String getDuration() {return duration;}
 
-    public Integer getDuration() {
-        return duration;
-    }
-    public void setDuration(Integer duration) {
+
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 }

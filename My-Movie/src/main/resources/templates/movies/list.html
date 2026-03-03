@@ -147,6 +147,103 @@
     }
 
 </style>
+<h2>Movies</h2>
+<div th:if="${success}" class="flash flash-success">
+    <div class="icon">✓</div>
+    <p class="text" th:text="${success}"></p>
+</div>
+<div th:if="${error}" class="flash flash-error">
+    <div class="icon">!</div>
+    <p class="text" th:text="${error}"></p>
+</div>
+<a href="/movies/new">Add Movie</a>
+<form method="get" th:action="@{/movies}">
+    <a th:href="@{/movies(
+        sortBy='title',
+        direction=${sortBy == 'title' and direction == 'asc' ? 'desc' : 'asc'},
+        title=${title},
+        genre=${genre},
+        page=${currentPage},
+        size=${size}
+    )}"> sort
+        <span th:if="${sortBy == 'title'}"
+              th:text="${direction == 'asc' ? '▲' : '▼'}"  ></span>
+    </a> <br>
+    Search by title:
+    <input type="text" name="title" th:value="${title}" />
+    Search by genre:
+    <input type="text" name="genre" th:value="${genre}" />
+    <button type="submit">Search</button>
+    <a href="/movies">Reset</a>
+</form>
+<br>
+<table border="1">
+    <tr>
+        <th>Title</th>
+        <th>Genre</th>
+        <th>Rating</th>
+        <th>Release Date</th>
+        <th>Duration</th>
+        <th>Directors</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="movie : ${movies}">
+        <td th:text="${movie.title}"></td>
+        <td th:text="${movie.genre}"></td>
+        <td th:text="${movie.rating}"></td>
+        <td th:text="${movie.releaseDate}"></td>
+        <td th:text="${movie.duration}"></td>
+        <td th:text="${movie.directorName}"></td>
+        <td>
+            <a th:href="@{/movies/{id}/edit(id=${movie.id})}">Edit</a>
+            <form th:action="@{/movies/{id}/delete(id=${movie.id})}"
+                  method="post"
+                  style="display:inline;"
+                  onsubmit="return handleDelete()">
+
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<div class="mt-3">
+    <a th:if="${currentPage > 0}"
+       th:href="@{/movies(
+       page=${currentPage - 1},
+       size=${size},
+       title=${title},
+       genre=${genre},
+       sortBy=${sortBy},
+       direction=${direction})}">
+        ←
+    </a>
+    <span th:each=i : ${#numbers.sequence(0, totalPages - 1)}">
+        <a th:href=@{/movies(
+        page=${i},
+        size=${size},
+        title=${title},
+        genre=${genre},
+        sortBy=${sortBy},
+        direction=${direction})}"
+           th:text="${i + 1}"
+           th:style="${i == currentPage} ? 'font-weight:bold' : ''">
+        </a>
+    </span>
+    <a th:if="${currentPage + 1 < totalPages}"
+       th:href="@{/movies(
+       page=${currentPage + 1},
+       size=${size},
+       title=${title},
+       genre=${genre},
+       sortBy=${sortBy},
+       direction=${direction})}">
+        →
+    </a>
+</div>
+<div id="deleteNotification">
+    Movie successfully deleted!
+</div>
+
 
 </head>
 </html>
