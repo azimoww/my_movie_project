@@ -4,7 +4,6 @@ import com.movie.dea.dto.MovieForm;
 import com.movie.dea.entity.Director;
 import com.movie.dea.entity.Movie;
 import com.movie.dea.repository.DirectorRepository;
-import com.movie.dea.service.MovieService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -19,10 +18,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/movies")
 @Tag(name="Movies", description = "Movie management API")
 public class MoviePageController {
-    private final MovieService movieService;
+    private final com.movie.dea.service.MovieService movieService;
     private final DirectorRepository directorRepository;
-    public MoviePageController(MovieService movieService, DirectorRepository directorRepository) {
+    public MoviePageController(com.movie.dea.service.MovieService movieService, DirectorRepository directorRepository) {
         this.movieService = movieService;
+
         this.directorRepository = directorRepository;
     }
 
@@ -73,7 +73,7 @@ public class MoviePageController {
     @GetMapping("/new")
     public String form(Model model){
         model.addAttribute("movieForm", new MovieForm());
-        model.addAttribute("directors", DirectorRepository.findAll());
+        model.addAttribute("directors", directorRepository.findAll());
         return "movies/new";
     }
     @PostMapping
